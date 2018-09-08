@@ -46,12 +46,12 @@ g = function(o, p, beta, aj) {
   sum(abs(o - pij(p, beta, aj)))
 }
 
-g = function(o, p, beta) { 
-  sum(abs(o - pij(p, beta)))
-}
+# g = function(o, p, beta) { 
+#   sum(abs(o - pij(p, beta)))
+# }
 
 
-beta = seq(0, 2, .1 )
+beta = seq(0, 2, .01 )
 
 ans = sapply(beta, function(x) {print(x); g(pReal, pTime, x, aerzte[,2])})
 ans = sapply(beta, function(x) {print(x); g(pReal, pTime, x)})
@@ -175,8 +175,26 @@ timeB432 <- Timetime[12454:15388,]
 # > 
 
 
+# Berechnung des Distanzerwartungswertes
 
+dew <- function(p, beta, aij) { 
+  sum(pij(p, beta, aij)*p)
+}
 
+test <- sapply(beta, function(x) {dew(pTime[1,], x, aerzte[,2])})
+
+test2 <- dew(pTime[2,], 0.38, aerzte[,2])
+
+i <- 0
+tst <- c()
+for(i in 1:nrow(pTime)){
+  tst[i] <- dew(pTime[i,], 0.38, aerzte[,2])
+  print(i)
+}
+
+#DEWgesamt <- tst
+DEWgesamt
+mean(DEWgesamt)
 
 
 
